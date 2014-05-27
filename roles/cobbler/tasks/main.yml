@@ -1,0 +1,26 @@
+---
+# file: roles/cobbler/tasks/main.yml
+
+- name: ensure required packages are present
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - cobbler
+    - cobbler-web
+    - debmirror
+    - dnsmasq
+    - pykickstart
+
+- name: ensure all boot-loaders are present
+  command: cobbler get-loaders creates=/var/lib/cobbler/loaders/menu.c32
+
+- name: ensure the main cobbler settings file is present
+  template: src=etc/cobbler/settings.j2 dest=/etc/cobbler/settings mode=644 owner=root group=root
+
+- name: ensure the cobbler credentials file is present
+  template: src=etc/cobbler/users.digest.j2 dest=/etc/cobbler/users.digest mode=600 owner=root group=root
+
+- name: ensure the cobbler module settings file is present
+  template: src=etc/cobbler/modules.conf.j2 dest=/etc/cobbler/modules.conf mode=644 owner=root group=root
+
+- name: ensure the cobbler dnsmasq settings file is present
+  template: src=etc/cobbler/dnsmasq.template.j2 dest=/etc/cobbler/dnsmasq.template mode=644 owner=root group=root

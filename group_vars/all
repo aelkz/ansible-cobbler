@@ -1,0 +1,7 @@
+---
+# file: group_vars/all
+
+cobbler_host: "{{ ansible_eth1.ipv4.address }}"
+cobbler_web_default_password: a2d6bae81669d707b72c0bd9806e01f3 # password is "cobbler"
+cobbler_dns_range_start: 192.168.20.100
+cobbler_dns_range_end: 192.168.20.149

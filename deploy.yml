@@ -1,0 +1,7 @@
+- name: setup Cobbler nodes
+  hosts: all
+  gather_facts: yes
+  sudo: yes
+  roles:
+    - common
+    - cobbler
